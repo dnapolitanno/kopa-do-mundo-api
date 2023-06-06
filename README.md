@@ -56,8 +56,8 @@ pytest --testdox -vvs tests/tarefas/tarefa_1/
 A partir de agora, para os testes das tarefas 2, 3 e 4, já que começaremos a usar o Django, precisaremos de um arquivo **pytest.ini**, você **DEVE** cria-lo na raiz do projeto, depois de criar esse aquivo você precisa adicionar nele a seguinte configuração:
 
 ```python
-[pytest]
-DJANGO_SETTINGS_MODULE = kopa_do_mundo.settings
+    [pytest]
+    DJANGO_SETTINGS_MODULE = kopa_do_mundo.settings
 ```
 
 Após isso, você pode executar os comandos abaixo para rodar os testes:

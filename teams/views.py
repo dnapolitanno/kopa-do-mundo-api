@@ -21,7 +21,7 @@ class KopaView(APIView):
         try:
             data_processing(request.data)
         except (NegativeTitlesError, InvalidYearCupError, ImpossibleTitlesError) as error:
-            return Response({"error": error.message})
+            return Response({"error": error.message}, status.HTTP_400_BAD_REQUEST)
 
         team = Team.objects.create(**request.data)
         team_dict = model_to_dict(team)
@@ -34,7 +34,7 @@ class KopaDetailView(APIView):
         try:
             team = Team.objects.get(id=team_id)
         except Team.DoesNotExist:
-            return Response({"msg": "Team not found"}, status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Team not found"}, status.HTTP_404_NOT_FOUND)
 
         team_dict = model_to_dict(team)
         return Response(team_dict, status.HTTP_200_OK)
@@ -43,7 +43,7 @@ class KopaDetailView(APIView):
         try:
             team = Team.objects.get(id=team_id)
         except Team.DoesNotExist:
-            return Response({"msg": "Team not found"}, status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Team not found"}, status.HTTP_404_NOT_FOUND)
 
         team.name = request.data.get("name", team.name)
         team.titles = request.data.get("titles", team.titles)
@@ -60,7 +60,7 @@ class KopaDetailView(APIView):
         try:
             team = Team.objects.get(id=team_id)
         except Team.DoesNotExist:
-            return Response({"msg": "Team not found"}, status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Team not found"}, status.HTTP_404_NOT_FOUND)
 
         team.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
