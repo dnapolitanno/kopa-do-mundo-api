@@ -45,11 +45,8 @@ class KopaDetailView(APIView):
         except Team.DoesNotExist:
             return Response({"message": "Team not found"}, status.HTTP_404_NOT_FOUND)
 
-        team.name = request.data.get("name", team.name)
-        team.titles = request.data.get("titles", team.titles)
-        team.top_scorer = request.data.get("top_scorer", team.top_scorer)
-        team.fifa_code = request.data.get("fifa_code", team.fifa_code)
-        team.first_cup = request.data.get("first_cup", team.first_cup)
+        for key, value in request.data.items():
+            setattr(team, key, value)
 
         team.save()
 
